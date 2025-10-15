@@ -1,0 +1,76 @@
+.sidebar {
+  width: 250px;
+  min-height: 100vh;
+  background-color: white;
+  border-right: 1px solid #e0e0e0;
+  padding-top: 20px;
+}
+
+.sidebar-options {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 0 20px;
+}
+
+.sidebar-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  color: #666;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.sidebar-option:hover {
+  background-color: #f8f9fa;
+  color: #333;
+}
+
+.sidebar-option.active {
+  background-color: #ffe8df;
+  color: #ff6b35;
+  border-color: #ff6b35;
+}
+
+.sidebar-option.active .option-icon {
+  background-color: #fff;
+  color: #ff6b35;
+}
+
+.option-icon {
+  font-size: 20px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-radius: 4px;
+}
+
+.sidebar-option p {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.sidebar-option.danger {
+  color: #dc3545;
+}
+
+.sidebar-option.danger:hover {
+  background-color: #fff5f5;
+  color: #c82333;
+  border-color: #dc3545;
+}
+
+.sidebar-option.danger.active {
+  background-color: #fff5f5;
+  color: #dc3545;
+  border-color: #dc3545;
+}

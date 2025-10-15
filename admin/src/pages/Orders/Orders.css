@@ -1,0 +1,258 @@
+.order {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.order-title {
+  font-size: 20px;
+  font-weight: 500;
+  color: #666;
+  margin: 0;
+}
+
+.refresh-btn {
+  background: linear-gradient(135deg, #ff6b35, #f7931e);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 14px;
+}
+
+.refresh-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+}
+
+.no-orders {
+  text-align: center;
+  padding: 60px 20px;
+  color: #666;
+}
+
+.no-orders p {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.no-orders .refresh-btn {
+  margin: 0 auto;
+}
+
+.order-table {
+  background-color: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+  width: 100%;
+}
+
+.order-table-header {
+  display: none;
+}
+
+.order-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 20px;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background-color 0.2s ease;
+}
+
+.order-row:hover {
+  background-color: #f8f9fa;
+}
+
+.order-row:last-child {
+  border-bottom: none;
+}
+
+.order-icon-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.parcel-icon {
+  font-size: 32px;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #ff6b35, #f7931e);
+  border-radius: 8px;
+}
+
+.order-details-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+}
+
+.order-items {
+  font-weight: 500;
+  color: #333;
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.order-count {
+  color: #666;
+  margin: 0;
+  font-size: 12px;
+}
+
+.customer-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  flex: 1;
+  min-width: 0;
+}
+
+.customer-name {
+  font-weight: 500;
+  color: #333;
+  margin: 0;
+  font-size: 14px;
+}
+
+.customer-address {
+  color: #666;
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.3;
+}
+
+.customer-phone {
+  color: #666;
+  margin: 0;
+  font-size: 12px;
+}
+
+.amount-cell {
+  text-align: left;
+  flex-shrink: 0;
+}
+
+.amount-label {
+  font-size: 12px;
+  color: #999;
+  margin: 0 0 5px 0;
+}
+
+.order-amount {
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+  font-size: 16px;
+}
+
+.status-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  flex-shrink: 0;
+}
+
+.status-select {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background-color: white;
+  color: #333;
+  font-size: 14px;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.2s ease;
+  min-width: 150px;
+}
+
+.status-select:focus {
+  border-color: #ff6b35;
+}
+
+.status-select option {
+  padding: 8px;
+}
+
+/* Status-specific styling */
+.status-select[value="Food Processing"] {
+  background-color: #fff3cd;
+  border-color: #ffc107;
+  color: #856404;
+}
+
+.status-select[value="Out for delivery"] {
+  background-color: #d1ecf1;
+  border-color: #17a2b8;
+  color: #0c5460;
+}
+
+.status-select[value="Delivered"] {
+  background-color: #d4edda;
+  border-color: #28a745;
+  color: #155724;
+}
+
+/* New Order Alert Animation */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .order-item {
+    grid-template-columns: 1fr;
+    gap: 15px;
+    text-align: center;
+  }
+  
+  .order-details {
+    align-items: center;
+  }
+  
+  .order-address {
+    text-align: center;
+  }
+}

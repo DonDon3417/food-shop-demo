@@ -1,0 +1,167 @@
+.add {
+  color: #6d6d6d;
+  font-size: 14px;
+}
+
+.add .flex-col {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.add-img-upload {
+  margin-bottom: 20px;
+}
+
+.add-img-upload p {
+  margin-bottom: 10px;
+  font-weight: 500;
+  color: #333;
+}
+
+.upload-area {
+  width: 120px;
+  height: 120px;
+  border: 2px dashed #ddd;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+  overflow: hidden;
+}
+
+.upload-area:hover {
+  border-color: #ff6b35;
+}
+
+.upload-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  color: #999;
+}
+
+.upload-icon {
+  font-size: 24px;
+}
+
+.preview-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.add-product-name,
+.add-product-description {
+  margin-bottom: 20px;
+}
+
+.add-product-name p,
+.add-product-description p {
+  margin-bottom: 10px;
+  font-weight: 500;
+  color: #333;
+}
+
+.add-product-name input {
+  max-width: 500px;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.add-product-name input:focus {
+  border-color: #ff6b35;
+}
+
+.add-product-description textarea {
+  max-width: 500px;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  resize: vertical;
+  font-family: inherit;
+  transition: border-color 0.2s ease;
+}
+
+.add-product-description textarea:focus {
+  border-color: #ff6b35;
+}
+
+.add-category-price {
+  display: flex;
+  gap: 30px;
+  margin-bottom: 30px;
+}
+
+.add-category,
+.add-price {
+  flex: 1;
+  max-width: 200px;
+}
+
+.add-category p,
+.add-price p {
+  margin-bottom: 10px;
+  font-weight: 500;
+  color: #333;
+}
+
+.add-category select,
+.add-price input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.add-category select:focus,
+.add-price input:focus {
+  border-color: #ff6b35;
+}
+
+.add-btn {
+  max-width: 120px;
+  border: none;
+  padding: 12px 24px;
+  background-color: #000;
+  color: white;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+}
+
+.add-btn:hover {
+  background-color: #333;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .add {
+    width: 90%;
+    margin-left: 5%;
+  }
+  
+  .add-category-price {
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .add-category,
+  .add-price {
+    max-width: none;
+  }
+}

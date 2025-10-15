@@ -1,0 +1,263 @@
+import React, { useContext, useState } from 'react';
+import './PlaceOrder.css';
+import { StoreContext } from '../../context/StoreContext';
+import { useAuth } from '../../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
+const PlaceOrder = () => {
+  const { getTotalCartAmount, food_list, cartItems } = useContext(StoreContext)
+  const { user, updateProfile } = useAuth()
+  const navigate = useNavigate()
+  
+  const [data, setData] = useState({
+    firstName: user?.name?.split(' ')[0] || '',
+    lastName: user?.name?.split(' ').slice(1).join(' ') || '',
+    email: user?.email || '',
+    street: user?.address || '',
+    city: '',
+    state: '',
+    zipcode: '',
+    country: 'Vietnam',
+    phone: user?.phone || ''
+  })
+
+  const onChangeHandler = (event) => {
+    const name = event.target.name
+    const value = event.target.value
+    setData(data => ({ ...data, [name]: value }))
+  }
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+
+  const placeOrder = async (event) => {
+    event.preventDefault();
+    
+    // Check if cart has items
+    const hasItems = food_list.some(item => cartItems[item._id] > 0);
+    if (!hasItems) {
+      alert('Your cart is empty. Please add some items before placing an order.');
+      return;
+    }
+    
+    setLoading(true);
+    
+    try {
+      // Prepare order items from cart
+      const orderItems = [];
+      let totalAmount = 0;
+      
+      // Convert cart items to order items format
+      food_list.forEach(item => {
+        if (cartItems[item._id] > 0) {
+          const productId = Number(item._id);
+          if (Number.isNaN(productId)) {
+            console.warn(`Skipping item with invalid product id: ${item._id}`);
+            return;
+          }
+          
+          orderItems.push({
+            productId,
+            productName: item.name,
+            quantity: cartItems[item._id],
+            price: item.price
+          });
+          totalAmount += item.price * cartItems[item._id];
+        }
+      });
+
+      if (orderItems.length === 0) {
+        alert('Your cart is empty. Please add items before placing an order.');
+        setLoading(false);
+        return;
+      }
+
+      const orderData = {
+        customerName: `${data.firstName} ${data.lastName}`.trim(),
+        customerEmail: data.email || 'guest@example.com',
+        customerPhone: data.phone || '0000000000',
+        firstName: data.firstName,
+        lastName: data.lastName,
+        street: data.street,
+        city: data.city,
+        state: data.state,
+        country: data.country || 'Vietnam',
+        zipCode: data.zipcode,
+        phone: data.phone || '0000000000',
+        items: orderItems,
+        totalAmount: totalAmount
+      };
+
+      console.log('Creating order with data:', orderData);
+      
+      // Create order via API
+      const response = await axios.post('http://localhost:5000/api/orders', orderData, {
+        timeout: 10000,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }
+      });
+
+      console.log('Order created successfully:', response.data);
+      
+      if (response.data && response.data.success) {
+        // Clear cart on success
+        Object.keys(cartItems).forEach(itemId => {
+          setCartItems(prev => ({ ...prev, [itemId]: 0 }));
+        });
+
+        // Show success message
+        setLoading(false);
+        setSuccess(true);
+        
+        // Redirect to success page
+        navigate('/order-success', { 
+          state: { 
+            orderId: response.data.orderId,
+            customerName: response.data.customerName || orderData.customerName,
+            totalAmount: response.data.totalAmount || totalAmount
+          } 
+        });
+      } else {
+        throw new Error(response.data?.message || 'Failed to create order');
+      }
+      
+    } catch (error) {
+      console.error('Error creating order:', error);
+      setLoading(false);
+      
+      // Show error message
+      let errorMessage = 'Failed to place order. Please try again.';
+      
+      if (error.response) {
+        // Server responded with error status
+        console.error('Error response data:', error.response.data);
+        errorMessage = error.response.data?.message || errorMessage;
+      } else if (error.request) {
+        // Request was made but no response
+        console.error('No response received:', error.request);
+        errorMessage = 'No response from server. Please check your connection.';
+      } else {
+        // Other errors
+        console.error('Error:', error.message);
+        errorMessage = error.message || errorMessage;
+      }
+      
+      alert(`Error: ${errorMessage}`);
+    }
+  };
+
+  return (
+    <div className="place-order">
+      <form onSubmit={placeOrder}>
+        <div className="place-order-left">
+          <p className="title">Delivery Information</p>
+          <div className="multi-fields">
+            <input
+              required
+              name="firstName"
+              onChange={onChangeHandler}
+              value={data.firstName}
+              type="text"
+              placeholder="First name"
+            />
+            <input
+              required
+              name="lastName"
+              onChange={onChangeHandler}
+              value={data.lastName}
+              type="text"
+              placeholder="Last name"
+            />
+          </div>
+          <input
+            required
+            name="email"
+            onChange={onChangeHandler}
+            value={data.email}
+            type="email"
+            placeholder="Email address"
+          />
+          <input
+            required
+            name="street"
+            onChange={onChangeHandler}
+            value={data.street}
+            type="text"
+            placeholder="Street address"
+          />
+          <div className="multi-fields">
+          <input 
+            required 
+            name='city' 
+            onChange={onChangeHandler} 
+            value={data.city} 
+            type="text" 
+            placeholder='City' 
+          />
+          <input 
+            required 
+            name='state' 
+            onChange={onChangeHandler} 
+            value={data.state} 
+            type="text" 
+            placeholder='State' 
+          />
+        </div>
+        <div className="multi-fields">
+          <input 
+            required 
+            name='zipcode' 
+            onChange={onChangeHandler} 
+            value={data.zipcode} 
+            type="text" 
+            placeholder='Zip code' 
+          />
+          <input 
+            required 
+            name='country' 
+            onChange={onChangeHandler} 
+            value={data.country} 
+            type="text" 
+            placeholder='Country' 
+          />
+        </div>
+        <input 
+          required 
+          name='phone' 
+          onChange={onChangeHandler} 
+          value={data.phone} 
+          type="text" 
+          placeholder='Phone' 
+        </div>
+      </div>
+      <div className="place-order-right">
+        <div className="cart-total">
+          <h2>Cart Totals</h2>
+          <div>
+            <div className="cart-total-details">
+              <p>Subtotal</p>
+              <p>${getTotalCartAmount()}</p>
+            </div>
+            <hr />
+            <div className="cart-total-details">
+              <p>Delivery Fee</p>
+              <p>${getTotalCartAmount() === 0 ? 0 : 5}</p>
+            </div>
+            <hr />
+            <div className="cart-total-details">
+              <b>Total</b>
+              <b>${getTotalCartAmount() === 0 ? 0 : getTotalCartAmount() + 5}</b>
+            </div>
+          </div>
+          <button type="submit" disabled={loading}>
+            {loading ? 'Placing Order...' : 'PLACE ORDER'}
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+);
+
+export default PlaceOrder;
