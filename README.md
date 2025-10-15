@@ -1,3 +1,5 @@
+<img width="1846" height="926" alt="image" src="https://github.com/user-attachments/assets/d5f9ba98-6a79-497c-b869-82a58769d861" />
+
 # 🍔 Del-Shop - Hệ thống Đặt Đồ Ăn Trực Tuyến
 Dự án **Del-Shop** là một hệ thống đặt đồ ăn trực tuyến hoàn chỉnh với 3 phần chính: Website khách hàng, Admin Panel và Backend API.
 ## 📋 Tổng quan dự án
@@ -30,8 +32,8 @@ Del-Shop/ ├── del-shop/ # Frontend - Website khách hàng (React + Vite)
 - **In-Memory Database** - Lưu trữ dữ liệu tạm thời
 - **Swagger** - API Documentation
 
-🎨 Tính năng nổi bật
-✨ Real-time Order Management - Cập nhật trạng thái đơn hàng ngay lập tức
-🔐 Authentication System - Hệ thống đăng nhập/đăng ký
-🛒 Shopping Cart - Giỏ hàng với Context API
+## 🎨 Tính năng nổi bật
+- ✨ Real-time Order Management - Cập nhật trạng thái đơn hàng ngay lập tức
+- 🔐 Authentication System - Hệ thống đăng nhập/đăng ký
+- 🛒 Shopping Cart - Giỏ hàng với Context API
 
